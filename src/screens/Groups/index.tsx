@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { Button } from '@components/Button';
 import { GroupCard } from '@components/GroupCard';
 import { Header } from '@components/Header';
 import { Hightlight } from '@components/HightLight';
@@ -25,6 +26,9 @@ export function Groups() {
         ListEmptyComponent={<ListEmpty message="Que tal cadastrar a primeira turma?" />}
       />
      
+      <Button
+        title="Criar nova turma"
+      />
     </Container>
   );
 }
