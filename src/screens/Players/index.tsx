@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import { ButtonIcon } from '@components/ButtonIcon';
 import { Filter } from '@components/Filter';
 import { Header } from '@components/Header';
 import { Hightlight } from '@components/HightLight';
 import { Input } from '@components/Input';
+import { PlayerCard } from '@components/PlayerCard';
 import { useState } from 'react';
 import { FlatList } from 'react-native';
 import {
@@ -11,7 +13,7 @@ import {
 
 export function Players() {
   const [team, setTeam] = useState('Time A');
-  const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState(['Duda', 'Matheus']);
 
   return (
     <Container>
@@ -40,7 +42,15 @@ export function Players() {
         />
         <NumbersOfPlayers>{players.length}</NumbersOfPlayers>
       </HeaderList>
-      
+
+      <FlatList 
+        data={players}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <PlayerCard name={item} onRemove={() => {}} />
+        )}
+      />
+
     </Container>
   );
 }
