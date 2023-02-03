@@ -7,21 +7,29 @@ import { Hightlight } from '@components/HightLight';
 import { Input } from '@components/Input';
 import { ListEmpty } from '@components/ListEmpty';
 import { PlayerCard } from '@components/PlayerCard';
+import { useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import { FlatList } from 'react-native';
 import {
   Container, Form, HeaderList, NumbersOfPlayers, 
 } from './styles';
 
+interface RouteParams{
+  group: string
+}
+
 export function Players() {
   const [team, setTeam] = useState('Time A');
   const [players, setPlayers] = useState(['Duda', 'Mirela']);
+
+  const route = useRoute();
+  const { group } = route.params as RouteParams;
 
   return (
     <Container>
       <Header showBackButton />
       <Hightlight
-        title="Nome da turma"
+        title={group}
         subtitle="Adicione a galera e separe os times" 
       />
 
