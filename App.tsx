@@ -15,7 +15,7 @@ export default function App() {
       <StatusBar 
         style="light"
       />
-     { fontsLoaded ? <Routes /> : <Loading />}
+      { fontsLoaded ? <Routes /> : <Loading />}
     </ThemeProvider>
   );
 }
