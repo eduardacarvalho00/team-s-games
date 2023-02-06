@@ -7,6 +7,7 @@ import { Header } from '@components/Header';
 import { Hightlight } from '@components/HightLight';
 import { Input } from '@components/Input';
 import { ListEmpty } from '@components/ListEmpty';
+import { Loading } from '@components/Loading';
 import { PlayerCard } from '@components/PlayerCard';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { groupRemoveByName } from '@storage/group/groupRemoveByName';
@@ -29,6 +30,7 @@ interface RouteParams{
 }
 
 export function Players() {
+  const [isLoading, setIsLoading] = useState(true);
   const [newPlayerName, setNewPlayerName] = useState('');
   const [team, setTeam] = useState('TIME A');
   const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
@@ -67,11 +69,15 @@ export function Players() {
 
   async function fetchPlayerByTeam() {
     try {
+      setIsLoading(true);
+
       const playerByTeam = await playerGetByGroupAndTeam(group, team);
       setPlayers(playerByTeam);
     } catch (error) {
       Alert.alert('Nova pessoa', 'Não foi possivel carregar as pessoas do time selecionado');
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -90,7 +96,7 @@ export function Players() {
       await groupRemoveByName(group);
       navigate('groups');
     } catch (error) {
-      Alert.alert('Remover grupo', 'Não foi possivel remover o grupo, tente novamente mais tarde');
+      Alert.alert('Remover turma', 'Não foi possivel remover a turma, tente novamente mais tarde');
       console.log(error);
     }
   }
@@ -98,7 +104,7 @@ export function Players() {
   async function handleGroupRemove() {
     Alert.alert(
       'Remover',
-      'Deseja remover o grupo?',
+      'Deseja remover a turma?',
       [
         { text: 'Não', style: 'cancel' },
         { text: 'Sim', onPress: () => groupRemove() },
@@ -135,6 +141,7 @@ export function Players() {
       </Form>
 
       <HeaderList>
+        
         <FlatList 
           data={['TIME A', 'TIME B']}
           keyExtractor={(item) => item}
@@ -150,16 +157,19 @@ export function Players() {
         <NumbersOfPlayers>{players.length}</NumbersOfPlayers>
       </HeaderList>
 
-      <FlatList 
-        data={players}
-        keyExtractor={(item) => item.name}
-        renderItem={({ item }) => (
-          <PlayerCard name={item.name} onRemove={() => handlePlayerRemove(item.name)} />
-        )}
-        ListEmptyComponent={<ListEmpty message="Não há pessoas nesse time" />}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={[{ paddingBottom: 100 }, players.length === 0 && { flex: 1 }]}
-      />
+      {
+        isLoading ? <Loading /> 
+          : <FlatList 
+              data={players}
+              keyExtractor={(item) => item.name}
+              renderItem={({ item }) => (
+                <PlayerCard name={item.name} onRemove={() => handlePlayerRemove(item.name)} />
+              )}
+              ListEmptyComponent={<ListEmpty message="Não há pessoas nesse time" />}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={[{ paddingBottom: 100 }, players.length === 0 && { flex: 1 }]}
+            />
+      }
       <Button title="Remover Turma" type="SECONDARY" onPress={handleGroupRemove} />
     </Container>
   );
