@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "igniteteams",
+    "name": "IgniteTeams",
     "slug": "igniteteams",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00875F"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,13 +21,16 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.duda.igniteteams",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#00875F"
       }
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "extra": {
+      "eas": {
+        "projectId": "a26d2b35-ff62-45ce-bf85-e13a132c9915"
+      }
     }
   }
 }
